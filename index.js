@@ -10,7 +10,7 @@ dotenv.config(); // Load .env variables
 // Import routes
 const flashcardRoutes = require('./routes/flashcardRoutes');
 const notesRoutes = require('./routes/notesRoutes');
-
+const quizRoutes = require('./routes/quizRoutes');
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable for port
 
@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 // Mount API routes
 app.use('/api/flashcards', flashcardRoutes); // Routes can import db if needed
 app.use('/api/notes', notesRoutes);
-
+app.use('/api/quiz',quizRoutes)
 // Start server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
