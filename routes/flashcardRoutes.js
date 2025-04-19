@@ -7,6 +7,12 @@ const router = express.Router();
 router.post('/generate', flashcardController.generateFlashcards);
 
 // POST /api/flashcards/save
-router.post('/save', flashcardController.saveFlashcards);
+
+// POST /api/flashcards/
+router.post('/save-pdf', flashcardController.generateFlashcardsPDF);
+router.post('/json-from-pdf',flashcardController.reverseEngineerFlashcardsFromPDF);
+router.post('/saved',flashcardController.getFlashcardPDFUrlsByUser)
+// Store flashcard PDF URL and user id
+router.post('/save-db', flashcardController.saveFlashcardPDFUrl);
 
 module.exports = router;

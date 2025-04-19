@@ -14,24 +14,23 @@ const quizRoutes = require('./routes/quizRoutes');
 const app = express();
 const port = process.env.PORT || 3000; // Use environment variable for port
 
-// Firebase SDK initialization (ONLY ONCE HERE)
+// Firebase SDK initialization
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY || "YOUR_FALLBACK_API_KEY", // Use env var
-    authDomain: process.env.FIREBASE_AUTH_DOMAIN || "evalio-lms.firebaseapp.com", // Use env var
-    projectId: process.env.FIREBASE_PROJECT_ID || "evalio-lms", // Use env var
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "evalio-lms.appspot.com", // Use env var
-    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || "YOUR_FALLBACK_SENDER_ID", // Use env var
-    appId: process.env.FIREBASE_APP_ID || "YOUR_FALLBACK_APP_ID", // Use env var
-    measurementId: process.env.FIREBASE_MEASUREMENT_ID // Optional
+    apiKey: "AIzaSyCDWxyhg1BNsF-_VPLNuBolq0-qQaqWvkQ",
+    authDomain: "evalio-lms.firebaseapp.com",
+    projectId: "evalio-lms",
+    storageBucket: "evalio-lms.firebasestorage.app",
+    messagingSenderId: "906474100955",
+    appId: "1:906474100955:web:b35fd7bd53152d065bd4fe",
+    measurementId: "G-6HGG06T6D8"
   };
-
 const firebaseApp = initializeApp(firebaseConfig);
 const auth = getAuth(firebaseApp);
-const db = getFirestore(firebaseApp); // Initialize Firestore
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Make sure body parsing middleware is before routes
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
@@ -43,10 +42,8 @@ app.get('/', (req, res) => {
 app.use('/api/flashcards', flashcardRoutes); // Routes can import db if needed
 app.use('/api/notes', notesRoutes);
 app.use('/api/quiz',quizRoutes)
+app.use('/api/quiz-gform', require('./routes/quizGoogleFormRoutes')); // Google Form routes
 // Start server
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
-
-// Export db and auth for use in other modules
-module.exports = { db, auth };
